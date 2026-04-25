@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simple Flight Tracker</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <h1>Simple Flight Tracker</h1>
+      <p class="subtitle">Real-time flight tracking with a simplified FlightRadar-like feel</p>
+    </header>
+
+    <main class="layout">
+      <section class="panel controls">
+        <h2>Track a Flight</h2>
+        <form id="flight-form" autocomplete="off">
+          <label for="flight-input">Flight number</label>
+          <div class="row">
+            <input
+              id="flight-input"
+              name="flight"
+              type="text"
+              placeholder="e.g. UA1998, DL123"
+              maxlength="10"
+              required
+            />
+            <button type="submit">Add</button>
+          </div>
+        </form>
+
+        <p class="hint">
+          Flight numbers are stored in your browser. Live position uses OpenSky when available.
+        </p>
+
+        <div class="actions">
+          <button id="refresh-all" class="secondary">Refresh all updates</button>
+          <button id="clear-all" class="danger">Clear all tracked flights</button>
+        </div>
+
+        <p id="source-note" class="source-note">Data source: waiting for first update.</p>
+      </section>
+
+      <section class="panel radar">
+        <div class="map-header">
+          <h2>Live Map</h2>
+          <span id="selected-flight-label">No flight selected</span>
+        </div>
+        <div id="flight-map" class="flight-map" aria-label="Flight map"></div>
+        <p id="route-caption" class="route-caption">Select a flight card to see a route line.</p>
+
+        <div class="radar-header">
+          <h2>Tracked Flights</h2>
+          <span id="count-badge">0 flights</span>
+        </div>
+        <div id="flight-list" class="flight-list" aria-live="polite"></div>
+      </section>
+    </main>
+
+    <template id="flight-card-template">
+      <article class="flight-card" tabindex="0" role="button" aria-label="Select flight on map">
+        <div class="flight-main">
+          <div>
+            <h3 class="flight-number"></h3>
+            <p class="flight-status"></p>
+          </div>
+          <button class="remove-btn" type="button" aria-label="Remove flight">✕</button>
+        </div>
+
+        <div class="grid">
+          <p><span>Route</span><strong class="flight-route"></strong></p>
+          <p><span>Altitude</span><strong class="flight-altitude"></strong></p>
+          <p><span>Speed</span><strong class="flight-speed"></strong></p>
+          <p><span>Latitude</span><strong class="flight-lat"></strong></p>
+          <p><span>Longitude</span><strong class="flight-lon"></strong></p>
+          <p><span>Heading</span><strong class="flight-heading"></strong></p>
+          <p><span>Source</span><strong class="flight-source"></strong></p>
+          <p><span>Updated</span><strong class="flight-updated"></strong></p>
+        </div>
+
+        <div class="timeline-wrap">
+          <div class="timeline" role="img" aria-label="Simplified route line"></div>
+          <div class="plane" aria-hidden="true">✈</div>
+        </div>
+      </article>
+    </template>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+    <script src="tracker.js"></script>
+  </body>
+</html>
