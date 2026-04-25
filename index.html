@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simple Flight Tracker</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <h1>Simple Flight Tracker</h1>
+      <p class="subtitle">FlightRadar-inspired, lightweight, and local-first</p>
+    </header>
+
+    <main class="layout">
+      <section class="panel controls">
+        <h2>Track a Flight</h2>
+        <form id="flight-form" autocomplete="off">
+          <label for="flight-input">Flight number</label>
+          <div class="row">
+            <input
+              id="flight-input"
+              name="flight"
+              type="text"
+              placeholder="e.g. DL123, BA218"
+              maxlength="10"
+              required
+            />
+            <button type="submit">Add</button>
+          </div>
+        </form>
+        <p class="hint">Stored in your browser (localStorage).</p>
+
+        <div class="actions">
+          <button id="refresh-all" class="secondary">Refresh all updates</button>
+          <button id="clear-all" class="danger">Clear all tracked flights</button>
+        </div>
+      </section>
+
+      <section class="panel radar">
+        <div class="radar-header">
+          <h2>Tracked Flights</h2>
+          <span id="count-badge">0 flights</span>
+        </div>
+        <div id="flight-list" class="flight-list" aria-live="polite"></div>
+      </section>
+    </main>
+
+    <template id="flight-card-template">
+      <article class="flight-card">
+        <div class="flight-main">
+          <div>
+            <h3 class="flight-number"></h3>
+            <p class="flight-status"></p>
+          </div>
+          <button class="remove-btn" type="button" aria-label="Remove flight">✕</button>
+        </div>
+
+        <div class="grid">
+          <p><span>Altitude</span><strong class="flight-altitude"></strong></p>
+          <p><span>Speed</span><strong class="flight-speed"></strong></p>
+          <p><span>Latitude</span><strong class="flight-lat"></strong></p>
+          <p><span>Longitude</span><strong class="flight-lon"></strong></p>
+          <p><span>Heading</span><strong class="flight-heading"></strong></p>
+          <p><span>Updated</span><strong class="flight-updated"></strong></p>
+        </div>
+
+        <div class="timeline-wrap">
+          <div class="timeline" role="img" aria-label="Simplified route line"></div>
+          <div class="plane" aria-hidden="true">✈</div>
+        </div>
+      </article>
+    </template>
+
+    <script src="tracker.js"></script>
+  </body>
+</html>
